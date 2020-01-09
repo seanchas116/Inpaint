@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
     char* imageName = argc >= 2 ? argv[1] : (char*)"default.jpg";
 
-    originalImage=cv::imread(imageName,CV_LOAD_IMAGE_COLOR);
+    originalImage=cv::imread(imageName, cv::IMREAD_COLOR);
 
     if(!originalImage.data){
         std::cout<<std::endl<<"Error unable to open input image"<<std::endl;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     }
 
     if(maskSpecified){
-        inpaintMask=cv::imread(maskName,CV_LOAD_IMAGE_GRAYSCALE);
+        inpaintMask=cv::imread(maskName, cv::IMREAD_GRAYSCALE);
         Inpainter i(originalImage,inpaintMask,halfPatchWidth);
         if(i.checkValidInputs()==i.CHECK_VALID){
             i.inpaint();

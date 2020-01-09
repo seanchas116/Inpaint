@@ -1,7 +1,7 @@
 #ifndef GRADIENTCALCULATOR_H
 #define GRADIENTCALCULATOR_H
-#include<opencv/cv.h>
-#include<opencv/highgui.h>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 class GradientCalculator
 {
 private:

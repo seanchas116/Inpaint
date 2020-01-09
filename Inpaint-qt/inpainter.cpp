@@ -57,7 +57,7 @@ int Inpainter::checkValidInputs(){
         return ERROR_INPUT_MAT_INVALID_TYPE;
     if(this->mask.type()!=CV_8UC1)
         return ERROR_INPUT_MASK_INVALID_TYPE;
-    if(!CV_ARE_SIZES_EQ(&mask,&inputImage))
+    if(mask.size != inputImage.size)
         return ERROR_MASK_INPUT_SIZE_MISMATCH;
     if(halfPatchWidth==0)
         return ERROR_HALF_PATCH_WIDTH_ZERO;
@@ -100,7 +100,7 @@ void Inpainter::inpaint(){
 
 void Inpainter::calculateGradients(){
     cv::Mat srcGray;
-    cv::cvtColor(workImage,srcGray,CV_BGR2GRAY);
+    cv::cvtColor(workImage,srcGray, cv::COLOR_BGR2GRAY);
 
     cv::Scharr(srcGray,gradientX,CV_16S,1,0);
     cv::convertScaleAbs(gradientX,gradientX);
@@ -137,16 +137,16 @@ void Inpainter::calculateGradients(){
 }
 
 void Inpainter::initializeMats(){
-    cv::threshold(this->mask,this->confidence,10,255,CV_THRESH_BINARY);
-    cv::threshold(confidence,confidence,2,1,CV_THRESH_BINARY_INV);
+    cv::threshold(this->mask,this->confidence,10,255, cv::THRESH_BINARY);
+    cv::threshold(confidence,confidence,2,1,cv::THRESH_BINARY_INV);
     confidence.convertTo(confidence,CV_32F);
 
     this->sourceRegion=confidence.clone();
     this->sourceRegion.convertTo(sourceRegion,CV_8U);
     this->originalSourceRegion=sourceRegion.clone();
 
-    cv::threshold(mask,this->targetRegion,10,255,CV_THRESH_BINARY);
-    cv::threshold(targetRegion,targetRegion,2,1,CV_THRESH_BINARY);
+    cv::threshold(mask,this->targetRegion,10,255,cv::THRESH_BINARY);
+    cv::threshold(targetRegion,targetRegion,2,1,cv::THRESH_BINARY);
     targetRegion.convertTo(targetRegion,CV_8U);
     data=cv::Mat(inputImage.rows,inputImage.cols,CV_32F,cv::Scalar::all(0));
 

@@ -6,6 +6,8 @@ project(Inpaint)
 # Build main.cpp
 ################################################################################
 
+set(CMAKE_CXX_STANDARD 17)
+
 # Create a list of all the ".cpp" files and save it to |sources|.
 file(GLOB sources RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.cpp")
 
